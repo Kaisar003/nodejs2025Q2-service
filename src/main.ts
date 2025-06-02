@@ -9,6 +9,11 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store');
+    next();
+  });
+
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
